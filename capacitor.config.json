@@ -1,0 +1,15 @@
+{
+  "appId": "com.masul.raac",
+  "appName": "Raac",
+  "webDir": "www",
+  "backgroundColor": "#070b12",
+  "server": {
+    "androidScheme": "https"
+  },
+  "ios": {
+    "backgroundColor": "#070b12"
+  },
+  "android": {
+    "backgroundColor": "#070b12"
+  }
+}

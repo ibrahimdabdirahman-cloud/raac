@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Book a ride — Raac</title>
+<meta name="description" content="Book a bajaaj, saloon, XL or delivery ride with upfront fares. Ride now or schedule up to 7 days ahead.">
+<link rel="canonical" href="https://raac-ride.vercel.app/app">
+<meta name="theme-color" content="#070b12">
+<meta property="og:title" content="Book a ride — Raac">
+<meta property="og:description" content="Upfront fares, cash or mobile money. No download needed.">
+<link rel="icon" href="/assets/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/assets/icon-192.png">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+<link rel="stylesheet" href="/assets/raac.css">
+</head>
+<body class="app-body">
+
+<header class="site-header">
+  <div class="wrap" style="height:56px">
+    <a class="brand" href="/" aria-label="Raac home" style="font-size:1.1rem">
+      <svg viewBox="0 0 48 48" fill="none" aria-hidden="true" style="width:24px;height:24px"><path d="M24 2C14 2 6 10 6 20c0 12 14 24 18 26 4-2 18-14 18-26C42 10 34 2 24 2z" fill="#38bdf8"/><path d="M24 10l3.1 6.7 7.3.9-5.4 5 1.4 7.2L24 26.2l-6.4 3.6 1.4-7.2-5.4-5 7.3-.9L24 10z" fill="#070b12"/></svg>
+      Raac
+    </a>
+    <nav class="nav">
+      <a href="/driver" data-nav data-i18n="nav.drivers">Drive with us</a>
+      <button class="lang-btn" data-lang-toggle aria-label="Switch language">SO</button>
+    </nav>
+  </div>
+</header>
+
+<main class="app-main">
+  <div id="map" aria-label="Map"></div>
+  <div class="map-hint" id="mapHint"></div>
+
+  <div class="panel">
+    <div class="stepper" id="stepper" aria-hidden="true"><i class="on"></i><i></i><i></i></div>
+
+    <!-- Step 1: locations -->
+    <div class="panel-scroll" id="step1">
+      <h2 data-i18n="app.step1">Where are you going?</h2>
+      <div class="loc-row" style="margin-bottom:14px">
+        <div class="field">
+          <label for="pickup" data-i18n="app.pickup">Pickup</label>
+          <input id="pickup" autocomplete="off" data-i18n-ph="app.pickupPh" placeholder="Search pickup location…">
+          <div class="suggest" id="pickupSuggest" hidden></div>
+          <div class="err" id="pickupErr"></div>
+        </div>
+        <button class="icon-btn" id="locateBtn" data-i18n-title="app.locate" title="Use my location" aria-label="Use my location">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/><circle cx="12" cy="12" r="8"/></svg>
+        </button>
+        <button class="icon-btn" id="pinPickupBtn" data-i18n-title="app.pinmap" title="Set on map" aria-label="Set pickup on map">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s7-6 7-11a7 7 0 1 0-14 0c0 5 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>
+        </button>
+      </div>
+      <div class="loc-row">
+        <div class="field">
+          <label for="dropoff" data-i18n="app.dropoff">Destination</label>
+          <input id="dropoff" autocomplete="off" data-i18n-ph="app.dropoffPh" placeholder="Where to?">
+          <div class="suggest" id="dropoffSuggest" hidden></div>
+          <div class="err" id="dropoffErr"></div>
+        </div>
+        <button class="icon-btn" id="pinDropBtn" data-i18n-title="app.pinmap" title="Set on map" aria-label="Set destination on map">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s7-6 7-11a7 7 0 1 0-14 0c0 5 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Step 2: vehicle + time -->
+    <div class="panel-scroll" id="step2" hidden>
+      <h2 data-i18n="app.step2">Choose your ride</h2>
+      <div class="trip-summary" id="tripSummary" hidden></div>
+      <div class="vehicles" id="vehicles"></div>
+      <div class="seg" role="tablist">
+        <button id="whenNow" class="active" data-i18n="app.now">Ride now</button>
+        <button id="whenLater" data-i18n="app.later">Schedule</button>
+      </div>
+      <div class="field" id="whenField" hidden>
+        <label for="whenInput" data-i18n="app.whenLabel">Pickup time</label>
+        <input id="whenInput" type="datetime-local">
+      </div>
+      <p class="muted" style="font-size:.82rem" data-i18n="app.fareNote">Final fare may vary slightly with traffic.</p>
+    </div>
+
+    <!-- Step 3: contact -->
+    <div class="panel-scroll" id="step3" hidden>
+      <h2 data-i18n="app.step3">Almost there</h2>
+      <div class="form-msg" id="formMsg"></div>
+      <div class="field">
+        <label for="name" data-i18n="app.name">Your name</label>
+        <input id="name" autocomplete="name" data-i18n-ph="app.namePh" placeholder="e.g. Ayaan Mohamed">
+        <div class="err" id="nameErr"></div>
+      </div>
+      <div class="field">
+        <label for="phone" data-i18n="app.phone">Phone number</label>
+        <input id="phone" type="tel" autocomplete="tel" data-i18n-ph="app.phonePh" placeholder="e.g. 061 2345678">
+        <div class="err" id="phoneErr"></div>
+      </div>
+      <div class="field">
+        <label for="payment" data-i18n="app.payment">Payment</label>
+        <select id="payment">
+          <option value="Cash" data-i18n="app.cash">Cash</option>
+          <option value="EVC Plus">EVC Plus</option>
+          <option value="eDahab">eDahab</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="notes" data-i18n="app.notes">Note for the driver (optional)</label>
+        <textarea id="notes" data-i18n-ph="app.notesPh" placeholder="Landmark, gate colour, extra stop…"></textarea>
+      </div>
+      <input type="text" id="company_website" name="company_website" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px" aria-hidden="true">
+    </div>
+
+    <!-- Success -->
+    <div class="panel-scroll" id="stepDone" hidden>
+      <div class="success">
+        <div class="big">🎉</div>
+        <h2 data-i18n="app.successT">Ride requested!</h2>
+        <p class="muted" data-i18n="app.successP">A driver will call you shortly to confirm your pickup.</p>
+        <div class="ref" id="rideRef"></div>
+        <button class="btn btn-primary btn-block" id="shareBtn" data-i18n="app.shareTrip">Share trip with family</button>
+        <button class="btn btn-ghost btn-block" id="newRideBtn" style="margin-top:10px" data-i18n="app.newRide">Book another ride</button>
+      </div>
+    </div>
+
+    <div class="step-nav" id="stepNav">
+      <button class="btn btn-ghost" id="backBtn" hidden data-i18n="app.back">Back</button>
+      <button class="btn btn-primary" id="nextBtn" data-i18n="app.next">Continue</button>
+    </div>
+  </div>
+</main>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<script src="/assets/i18n.js"></script>
+<script src="/assets/app.js"></script>
+<script>
+if ("serviceWorker" in navigator && location.protocol === "https:") {
+  addEventListener("load", () => navigator.serviceWorker.register("/sw.js"));
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Drive with Raac — set your hours, keep more of every fare</title>
+<meta name="description" content="Apply to drive with Raac in two minutes. Low commission, weekly payouts to EVC Plus or eDahab, flexible hours. We call you within 48 hours.">
+<link rel="canonical" href="https://raac-ride.vercel.app/driver">
+<meta property="og:title" content="Drive with Raac">
+<meta property="og:description" content="Low commission, weekly payouts, flexible hours. Apply in two minutes.">
+<meta name="theme-color" content="#070b12">
+<link rel="icon" href="/assets/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/assets/icon-192.png">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/raac.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="/" aria-label="Raac home">
+      <svg viewBox="0 0 48 48" fill="none" aria-hidden="true"><path d="M24 2C14 2 6 10 6 20c0 12 14 24 18 26 4-2 18-14 18-26C42 10 34 2 24 2z" fill="#38bdf8"/><path d="M24 10l3.1 6.7 7.3.9-5.4 5 1.4 7.2L24 26.2l-6.4 3.6 1.4-7.2-5.4-5 7.3-.9L24 10z" fill="#070b12"/></svg>
+      Raac
+    </a>
+    <nav class="nav">
+      <a href="/#how" data-nav data-i18n="nav.how">How it works</a>
+      <button class="lang-btn" data-lang-toggle aria-label="Switch language">SO</button>
+      <a class="btn btn-primary" href="/app" data-i18n="nav.book">Book a ride</a>
+    </nav>
+  </div>
+</header>
+
+<section class="driver-hero">
+  <div class="wrap">
+    <p class="section-kicker" data-i18n="drv.kicker">Drive with Raac</p>
+    <h1 data-i18n="drvp.title">Drive with Raac</h1>
+    <p class="lede muted" style="max-width:38em" data-i18n="drvp.lede">Set your own hours, keep more of every fare, and get paid weekly. Fill this in — we'll call you within 48 hours.</p>
+  </div>
+</section>
+
+<section style="padding-top:0">
+  <div class="wrap">
+    <div class="grid-3">
+      <div class="card"><div class="icon">💰</div><h3 data-i18n="drvp.b1t">Low commission</h3><p data-i18n="drvp.b1p">You keep more of every ride than on any other platform.</p></div>
+      <div class="card"><div class="icon">📆</div><h3 data-i18n="drvp.b2t">Weekly payouts</h3><p data-i18n="drvp.b2p">Cash out to EVC Plus, eDahab or bank every week.</p></div>
+      <div class="card"><div class="icon">🕒</div><h3 data-i18n="drvp.b3t">Flexible hours</h3><p data-i18n="drvp.b3p">Drive mornings, nights or weekends. You decide.</p></div>
+    </div>
+  </div>
+</section>
+
+<section style="padding-top:0">
+  <div class="wrap">
+    <div class="card driver-form-card" id="formCard">
+      <div class="form-msg" id="formMsg"></div>
+      <div class="field">
+        <label for="name" data-i18n="app.name">Your name</label>
+        <input id="name" autocomplete="name" data-i18n-ph="app.namePh" placeholder="e.g. Ayaan Mohamed">
+      </div>
+      <div class="field">
+        <label for="phone" data-i18n="app.phone">Phone number</label>
+        <input id="phone" type="tel" autocomplete="tel" data-i18n-ph="app.phonePh" placeholder="e.g. 061 2345678">
+      </div>
+      <div class="field">
+        <label for="city" data-i18n="drvp.city">City</label>
+        <select id="city">
+          <option>Mogadishu</option><option>Hargeisa</option><option>Garowe</option>
+          <option>Kismayo</option><option>Baidoa</option><option>Bosaso</option><option>Other</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="vehicle" data-i18n="drvp.vehicle">Your vehicle</label>
+        <select id="vehicle">
+          <option>Bajaaj</option><option>Saloon car</option><option>SUV / 7-seater</option>
+          <option>Motorbike</option><option>Van / pickup</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="experience" data-i18n="drvp.exp">Driving experience</label>
+        <select id="experience">
+          <option data-i18n="drvp.exp0">Less than 1 year</option>
+          <option data-i18n="drvp.exp1">1–3 years</option>
+          <option data-i18n="drvp.exp2">3–5 years</option>
+          <option data-i18n="drvp.exp3">5+ years</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="notes" data-i18n="drvp.notes">Anything else? (optional)</label>
+        <textarea id="notes"></textarea>
+      </div>
+      <input type="text" id="company_website" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px" aria-hidden="true">
+      <button class="btn btn-primary btn-block" id="applyBtn" data-i18n="drvp.apply">Send application</button>
+    </div>
+
+    <div class="card driver-form-card" id="doneCard" hidden>
+      <div class="success">
+        <div class="big">✅</div>
+        <h2 data-i18n="drvp.successT">Application received!</h2>
+        <p class="muted" data-i18n="drvp.successP">Our team will call you within 48 hours.</p>
+        <div class="ref" id="appRef"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div>© 2026 Raac · Masul Digital. <span data-i18n="foot.rights">All rights reserved.</span></div>
+    <nav>
+      <a href="/" data-i18n="foot.home">Home</a>
+      <a href="/app" data-i18n="foot.book">Book a ride</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="/assets/i18n.js"></script>
+<script>
+(function () {
+  const $ = (id) => document.getElementById(id);
+  const t = (k) => window.RaacI18n.t(k);
+  $("applyBtn").addEventListener("click", async () => {
+    const msg = $("formMsg");
+    msg.className = "form-msg";
+    const name = $("name").value.trim();
+    const phone = $("phone").value.trim();
+    const errs = [];
+    if (!name) errs.push(t("app.errName"));
+    if (phone.replace(/\D/g, "").length < 6) errs.push(t("app.errPhone"));
+    if (errs.length) {
+      msg.className = "form-msg error";
+      msg.textContent = errs.join(" · ");
+      return;
+    }
+    const btn = $("applyBtn");
+    btn.disabled = true;
+    btn.textContent = t("app.sending");
+    try {
+      const r = await fetch("https://masul-forms-backend.vercel.app/api/submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          siteId: "raac", type: "driver",
+          name, phone,
+          city: $("city").value, vehicle: $("vehicle").value,
+          experience: $("experience").value, notes: $("notes").value.trim(),
+          company_website: $("company_website").value,
+        }),
+      });
+      const j = await r.json().catch(() => ({}));
+      if (r.ok && j.ok) {
+        $("formCard").hidden = true;
+        $("doneCard").hidden = false;
+        $("appRef").textContent = "Ref: " + j.id;
+      } else {
+        msg.className = "form-msg error";
+        msg.textContent = (j.errors && j.errors.join(" · ")) || j.error || t("app.errNet");
+      }
+    } catch {
+      msg.className = "form-msg error";
+      msg.textContent = t("app.errNet");
+    } finally {
+      btn.disabled = false;
+      btn.textContent = t("drvp.apply");
+    }
+  });
+})();
+if ("serviceWorker" in navigator && location.protocol === "https:") {
+  addEventListener("load", () => navigator.serviceWorker.register("/sw.js"));
+}
+</script>
+</body>
+</html>
