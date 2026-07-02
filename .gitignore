@@ -1,5 +1,13 @@
+node_modules
+www
+ios/App/build
+android/.gradle
+android/app/build
+android/build
+android/local.properties
+ios/App/App/public
+android/app/src/main/assets/public
 .vercel
 .env.local
 .DS_Store
 .gstack/
-node_modules/
