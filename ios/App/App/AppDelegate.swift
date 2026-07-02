@@ -7,7 +7,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        // Programmatic root VC (storyboards removed — ibtool needs the full iOS
+        // platform component, which isn't installed on this machine).
+        window = UIWindow(frame: UIScreen.main.bounds)
+        window?.rootViewController = CAPBridgeViewController()
+        window?.makeKeyAndVisible()
         return true
     }
 

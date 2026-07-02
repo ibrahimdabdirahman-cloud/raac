@@ -11,3 +11,6 @@ android/app/src/main/assets/public
 .env.local
 .DS_Store
 .gstack/
+ios/spm-local/capacitor-swift-pm/*.xcframework
+ios/spm-local/capacitor-swift-pm/*.zip
+ios/App/CapApp-SPM/.build

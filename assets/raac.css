@@ -63,6 +63,7 @@ p { margin: 0 0 1em; }
   position: sticky; top: 0; z-index: 60;
   background: rgba(7, 11, 18, 0.85); backdrop-filter: blur(14px);
   border-bottom: 1px solid var(--line);
+  padding-top: env(safe-area-inset-top, 0px); /* clear the notch/status bar in the native shells */
 }
 .site-header .wrap { display: flex; align-items: center; gap: 22px; height: 66px; }
 .brand { display: flex; align-items: center; gap: 10px; font: 700 1.25rem var(--font-display); color: var(--text); }
@@ -228,7 +229,7 @@ section { padding: 72px 0; }
 }
 .trip-summary b { color: var(--good); font-family: var(--font-display); }
 
-.step-nav { display: flex; gap: 10px; padding: 14px 20px; border-top: 1px solid var(--line); background: rgba(7, 11, 18, 0.5); }
+.step-nav { display: flex; gap: 10px; padding: 14px 20px calc(14px + env(safe-area-inset-bottom, 0px)); border-top: 1px solid var(--line); background: rgba(7, 11, 18, 0.5); }
 .step-nav .btn { flex: 1; padding: 13px 18px; }
 
 .stepper { display: flex; gap: 6px; padding: 16px 20px 0; }
