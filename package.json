@@ -7,7 +7,7 @@
     "sync": "node tools/build-mobile.mjs && cap sync",
     "ios": "node tools/build-mobile.mjs && cap sync ios && cap open ios",
     "android": "node tools/build-mobile.mjs && cap sync android && cap open android",
-    "assets": "capacitor-assets generate --assetPath resources --iconBackgroundColor \"#070b12\" --iconBackgroundColorDark \"#070b12\" --splashBackgroundColor \"#070b12\" --splashBackgroundColorDark \"#070b12\""
+    "assets": "capacitor-assets generate --assetPath resources --iconBackgroundColor \"#9B1C2E\" --iconBackgroundColorDark \"#9B1C2E\" --splashBackgroundColor \"#14100e\" --splashBackgroundColorDark \"#14100e\""
   },
   "devDependencies": {
     "@capacitor/assets": "^3.0.5",

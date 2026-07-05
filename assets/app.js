@@ -43,9 +43,9 @@
       iconAnchor: [17, 42],
       html:
         `<svg class="pin-a" width="34" height="42" viewBox="0 0 34 42"><path d="M17 1C9 1 2.5 7.5 2.5 15.5 2.5 26 14 39 17 41c3-2 14.5-15 14.5-25.5C31.5 7.5 25 1 17 1z" fill="${color}"/>` +
-        `<text x="17" y="21" text-anchor="middle" font-family="system-ui" font-weight="700" font-size="14" fill="#070b12">${letter}</text></svg>`,
+        `<text x="17" y="21" text-anchor="middle" font-family="system-ui" font-weight="700" font-size="14" fill="#ffffff">${letter}</text></svg>`,
     });
-  const ICON_A = mkIcon("#38bdf8", "A");
+  const ICON_A = mkIcon("#9B1C2E", "A");
   const ICON_B = mkIcon("#34d399", "B");
 
   let markerA = null, markerB = null, routeLine = null;
@@ -231,7 +231,7 @@
           const rt = j.routes[0];
           route = { distanceKm: rt.distance / 1000, durationMin: rt.duration / 60, approx: false };
           if (routeLine) routeLine.remove();
-          routeLine = L.geoJSON(rt.geometry, { style: { color: "#38bdf8", weight: 5, opacity: 0.9 } }).addTo(map);
+          routeLine = L.geoJSON(rt.geometry, { style: { color: "#9B1C2E", weight: 5, opacity: 0.9 } }).addTo(map);
         }
       }
     } catch {}
@@ -239,7 +239,7 @@
       const km = haversineKm(a, b) * 1.4;
       route = { distanceKm: km, durationMin: (km / 25) * 60, approx: true };
       if (routeLine) routeLine.remove();
-      routeLine = L.polyline([[a.lat, a.lng], [b.lat, b.lng]], { color: "#38bdf8", weight: 4, dashArray: "8 8", opacity: 0.8 }).addTo(map);
+      routeLine = L.polyline([[a.lat, a.lng], [b.lat, b.lng]], { color: "#9B1C2E", weight: 4, dashArray: "8 8", opacity: 0.8 }).addTo(map);
     }
     // guard against zero-distance
     route.distanceKm = Math.max(0.3, route.distanceKm);
